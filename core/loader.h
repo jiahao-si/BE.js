@@ -1,3 +1,14 @@
+/**
+ * 由于头文件包含可以嵌套，那么C文件就有可能包含多次同一个头文件，就可能出现重复定义的问题的。
+   通过条件编译开关来避免重复包含（重复定义）
+   #ifndef __headerfileXXX__
+    #define __headerfileXXX__
+    …
+    文件内容
+    …
+    #endif
+ * 
+ */
 #ifndef LOADER_H
 #define LOADER_H
 
