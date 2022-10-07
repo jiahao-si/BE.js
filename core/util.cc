@@ -20,7 +20,7 @@ void Be::Util::setMethod(Isolate *isolate,
         FunctionTemplate::New(isolate, callback));
 }
 
-// 设置对象的属性，属性为非函数
+// 设置对象模板的属性，属性为非函数
 void Be::Util::setObjectTemplateValue(Isolate *isolate, 
                 Local<ObjectTemplate> 
                 recv, const char *name, 

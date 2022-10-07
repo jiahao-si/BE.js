@@ -3,6 +3,7 @@
 void Be::Console::log(V8_ARGS) {
     V8_ISOLATE
     String::Utf8Value str(isolate, args[0]);
+    // 实际调用 write 方法 to stdout
     Log(*str);
 }
 

@@ -36,7 +36,10 @@ void Be::Loader::Compile(V8_ARGS) {
 }
 
 void Be::Loader::Init(Isolate* isolate, Local<Object> target) {
+  // 创建 loader V8对象模板(对象模板中的属性都会添加进通过 loader 对象模板创建的对象实例中)
   Local<ObjectTemplate> loader = ObjectTemplate::New(isolate);
+  // 设置 loader 对象的 compile 方法
   setMethod(isolate, loader, "compile", Be::Loader::Compile);
+  // 使用 loader 对象模板创建对象实例， 并注入到 target ，也就是 Be
   setObjectValue(isolate, target, "loader", loader->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
 }
