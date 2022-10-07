@@ -1,15 +1,16 @@
 #include "console.h"
 
 void Be::Console::log(V8_ARGS) {
-    V8_ISOLATE
-    String::Utf8Value str(isolate, args[0]);
-    // 实际调用 write 方法 to stdout
-    Log(*str);
+  V8_ISOLATE
+  String::Utf8Value str(isolate, args[0]);
+  // 实际调用 write 方法 to stdout
+  Log(*str);
 }
 
 void Be::Console::Init(Isolate* isolate, Local<Object> target) {
   Local<ObjectTemplate> console = ObjectTemplate::New(isolate);
   setMethod(isolate, console, "log", Be::Console::log);
-  setObjectValue(isolate, target, "console", console->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
+  setObjectValue(
+      isolate, target, "console",
+      console->NewInstance(isolate->GetCurrentContext()).ToLocalChecked());
 }
-

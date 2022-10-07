@@ -1,13 +1,15 @@
-#include <iostream>
-#include <unistd.h>
-#include <sys/stat.h>
 #include <fcntl.h>
-#include "include/v8/libplatform/libplatform.h"
-#include "include/v8/v8.h"
-#include "core/loader.h"
+#include <sys/stat.h>
+#include <unistd.h>
+
+#include <iostream>
+
 #include "core/console.h"
+#include "core/loader.h"
 #include "core/process.h"
 #include "core/util.h"
+#include "include/v8/libplatform/libplatform.h"
+#include "include/v8/v8.h"
 
 using namespace v8;
 using namespace Be::Util;
@@ -23,11 +25,12 @@ int main(int argc, char* argv[]) {
   v8::V8::InitializePlatform(platform.get());
   v8::V8::Initialize();
 
-  // 创建新的 Isolate 
+  // 创建新的 Isolate
   Isolate::CreateParams create_params;
-  create_params.array_buffer_allocator = ArrayBuffer::Allocator::NewDefaultAllocator();
+  create_params.array_buffer_allocator =
+      ArrayBuffer::Allocator::NewDefaultAllocator();
   Isolate* isolate = Isolate::New(create_params);
-  
+
   {
     Isolate::Scope isolate_scope(isolate);
 
@@ -45,12 +48,16 @@ int main(int argc, char* argv[]) {
     Be::Console::Init(isolate, Be);
     Be::Process::Init(isolate, Be, argv, argc);
     Local<Object> globalInstance = context->Global();
-    globalInstance->Set(context, String::NewFromUtf8Literal(isolate, "Be", 
-    NewStringType::kNormal), Be);
+    globalInstance->Set(
+        context,
+        String::NewFromUtf8Literal(isolate, "Be", NewStringType::kNormal), Be);
     // 设置全局属性global指向全局对象
-    globalInstance->Set(context, String::NewFromUtf8Literal(isolate, 
-      "global", 
-      NewStringType::kNormal), globalInstance).Check();
+    globalInstance
+        ->Set(context,
+              String::NewFromUtf8Literal(isolate, "global",
+                                         NewStringType::kNormal),
+              globalInstance)
+        .Check();
     {
       // 打开文件
       int fd = open("Be.js", 0, O_RDONLY);
@@ -58,13 +65,14 @@ int main(int argc, char* argv[]) {
       // 取得文件信息
       fstat(fd, &info);
       // 分配内存保存文件内容
-      char *ptr = (char *)malloc(info.st_size + 1);
+      char* ptr = (char*)malloc(info.st_size + 1);
       // ptr[info.st_size] = '\0';
-      read(fd, (void *)ptr, info.st_size);
+      read(fd, (void*)ptr, info.st_size);
       // 要执行的js代码
-      Local<String> source = String::NewFromUtf8(isolate, ptr,
-                          NewStringType::kNormal,
-                          info.st_size).ToLocalChecked();
+      Local<String> source =
+          String::NewFromUtf8(isolate, ptr, NewStringType::kNormal,
+                              info.st_size)
+              .ToLocalChecked();
 
       // 编译源码
       Local<Script> script = Script::Compile(context, source).ToLocalChecked();
