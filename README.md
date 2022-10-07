@@ -2,9 +2,11 @@
 
 a JavaScript runtime
 
-# compile V8
+# V8
 
-[Reference](https://blog.csdn.net/THEANARKH/article/details/117479273)
+[Compile V8](https://blog.csdn.net/THEANARKH/article/details/117479273)
+
+[V8 API Design Doc](include/v8/APIDesign.md)
 
 # how to use
 
