@@ -6,6 +6,9 @@ a JavaScript runtime
 
 [Compile V8](https://blog.csdn.net/THEANARKH/article/details/117479273)
 
+[Compile V8 IN M1 Mac](https://joyeecheung.github.io/blog/2021/08/27/binding-v8-on-an-m1-macbook/)
+
+
 [V8 API Design Doc](include/v8/APIDesign.md)
 
 # how to use
